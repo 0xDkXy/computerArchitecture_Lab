@@ -54,6 +54,29 @@ void MessageQueue_append(MessageQueue *msgQue, Message msg)
 #endif
 }
 
+int MessageQueue_empty(MessageQueue *msgq)
+{
+    return msgq->length;
+}
+
+Message MessageQueue_pop(MessageQueue *msgq)
+{
+    if ( msgq->length == 0 )
+    {
+        printf("Error: Message Queue empty but pop!");
+        exit(1);
+    }
+    msgq->length --;
+    MessageItem *pointer;
+    pointer = msgq->head->next;
+    Message result = pointer->val;
+    msgq->head->next = pointer->next;
+    
+    return result;
+}
+
+
+
 char *Message_to_str(Message *msg)
 {
     char *str = (char *) malloc(64); // max value  64 bytes
@@ -107,5 +130,10 @@ int main(int argc, char *argv[])
         free(msg);
     }
     print_MessageQueue(msgq);
+    while (MessageQueue_empty(msgq))
+    {
+        Message msg = MessageQueue_pop(msgq);
+        printf("%c\n", msg.chr);
+    }
 }
 #endif

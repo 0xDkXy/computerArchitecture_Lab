@@ -38,6 +38,10 @@ char *Message_to_str(Message *msg);
 
 void print_MessageQueue(MessageQueue *);
 
+Message MessageQueue_pop(MessageQueue *);
+
+int MessageQueue_empty(MessageQueue *);
+
 
 
 #endif
