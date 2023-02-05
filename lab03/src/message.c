@@ -61,10 +61,15 @@ int MessageQueue_empty(MessageQueue *msgq)
 
 Message MessageQueue_pop(MessageQueue *msgq)
 {
-    if ( msgq->length == 0 )
+    // if ( msgq->length == 0 )
+    // {
+    //     printf("Error: Message Queue empty but pop!");
+    //     exit(1);
+    // }
+    if (msgq->length == 0)
     {
-        printf("Error: Message Queue empty but pop!");
-        exit(1);
+        Message empty = {-1, -1};
+        return empty;
     }
     msgq->length --;
     MessageItem *pointer;

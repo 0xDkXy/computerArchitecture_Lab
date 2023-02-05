@@ -18,7 +18,7 @@ void write_to_tunnel(Tunnel *destine, char chr, int did)
 {
     Message *message = malloc_new_message();
     write_message(message, did, chr);
-	printf("write_to_tunnel %d\n", did);
+	// printf("write_to_tunnel %d\n", did);
     int s;
     s = pthread_mutex_lock(&(destine->mtx));
     MessageQueue_append(destine->msgq, *message);
