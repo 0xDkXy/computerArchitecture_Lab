@@ -56,7 +56,7 @@ void MessageQueue_append(MessageQueue *msgQue, Message msg)
 
 int MessageQueue_empty(MessageQueue *msgq)
 {
-    return msgq->length;
+    return msgq->length == 0;
 }
 
 Message MessageQueue_pop(MessageQueue *msgq)
@@ -130,7 +130,7 @@ int main(int argc, char *argv[])
         free(msg);
     }
     print_MessageQueue(msgq);
-    while (MessageQueue_empty(msgq))
+    while (!MessageQueue_empty(msgq))
     {
         Message msg = MessageQueue_pop(msgq);
         printf("%c\n", msg.chr);

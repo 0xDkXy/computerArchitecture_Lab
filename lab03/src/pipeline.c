@@ -27,14 +27,14 @@ void *pipe_manager(int i)
         printf("\n连接设备,正准备数据...\n");
         connrun = 1;
         printf("请求I/O操作\n");
-        sleep(1000);
+        sleep(1);
 
         pthread_exit(NULL);
     }
     if (i == 2)
     {
         printf("递交数据给cpu...\n");
-        sleep(1000);
+        sleep(1);
         printf("结束\n");
         pthread_exit(NULL);
     }
@@ -76,7 +76,7 @@ void *cpu_running()
         if(cpuRequestPipeBit == 1 || onPipe == 1){//在管中直接运行
             printf("cpu正执行管理程序\n");    
             printf("处理数据中...\n");   
-            sleep(1000);   
+            sleep(1);   
             cpuTranstoPipeMessage = timeClip;
             onPipe = 1; 
             cpuRequestPipeBit = 0; //恢复到初始位           
@@ -89,6 +89,6 @@ void *cpu_running()
             pthread_create(&th_pipeM,NULL,pipe_manager(2),"th_pipeManager");
 
         }
-        sleep(1000);
+        sleep(1);
     }
 }

@@ -26,7 +26,7 @@ int main(int argc, char **argv)
         }
  
         timeClip++;
-        sleep(10000);
+        sleep(1);
 
     }
     
