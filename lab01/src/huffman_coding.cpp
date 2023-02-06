@@ -1,9 +1,9 @@
 #include <iostream>
 #include <cmath>
 #include "huffman_coding.h"
+#include "utils.h"
 
 #define N 8
-
 
 f_min_p *input_instruct_set()
 {
@@ -14,11 +14,11 @@ f_min_p *input_instruct_set()
     h->huf_p = NULL;
     head = h;
     int n;
-    std::cout << "请输入指令数:";
+    std::cout << "Please input the number of instructions: ";
     std::cin >> n;
-    std::cout << "请输入指令标号：";
+    std::cout << "Please input the label of instruction: ";
     std::cin >> h->op_mask;
-    std::cout << "请输入指令的使用概率：";
+    std::cout << "Please input the probability of  using instruction: ";
     std::cin >> h->p;
 
     int i = 0;
@@ -28,10 +28,10 @@ f_min_p *input_instruct_set()
     for (; i < n - 1; i++)
     {
         point = new f_min_p;
-        std::cout << "请输入指令标号：";
+        std::cout << "Please input the label of instruction: ";
         std::cin >> point->op_mask;
         point->op_mask[2] = '\0';
-        std::cout << "请输入指令的使用概率：";
+        std::cout << "Please input the probability of  using instruction: ";
         std::cin >> point->p;
         point->huf_p = NULL;
         point->next = p1->next;
@@ -76,7 +76,8 @@ huff_p *creat_huffman_tree(f_min_p *h)
 
     head = parent;
     int i = 0;
-    std::cout << i << std::endl;
+    // the output is useless
+    // std::cout << i << std::endl;
 
     while (h1->next != NULL)
     {
@@ -227,16 +228,20 @@ void creat_huffman_code(huff_p *h1, huff_code *h)
 void output_huffman(huff_code *head)
 {
     huff_code *h = head->next;
-    std::cout << "OP:"
-              << "--概率--" << ' ' << "--编码--" << std::endl;
+    std::cout << std::endl;
+    //set_background_color(WHITE);
+    //set_frontground_color(BLACK);
+    std::cout << "OP:\t"
+              << "Probability" << "\t" << "Encode" << std::endl;
     std::cout << "---------------------------------" << std::endl;
     while (h)
     {
         h->op_mask[2] = '\0';
-        std::cout << h->op_mask << ":  " << h->p << "     " << h->code << std::endl;
+        std::cout << h->op_mask << ":\t" << h->p << "\t" << h->code << std::endl;
         h = h->next;
     }
     std::cout << "---------------------------------" << std::endl;
+    reset_color();
     std::cout << std::endl;
 }
 void cal_sort_length(huff_code *head)
@@ -245,7 +250,7 @@ void cal_sort_length(huff_code *head)
     double j = 0;
     float one_length = 0;
     float per_length = 0;
-    float ext_length = 0; // 按1-2-3-5扩展编码的最小长度为。
+    float ext_length = 0; // the shortest length of 1-2-3-5 extending encoding
 
     while (h)
     {
@@ -264,7 +269,7 @@ void cal_sort_length(huff_code *head)
     int i1 = int(j);
     huff_code *p2 = head->next;
     float *p_a = new float[i1];
-    // sort指令概率
+    // sort the probabilities of instructions
     int i0 = 0;
     while (p2)
     {
@@ -289,7 +294,7 @@ void cal_sort_length(huff_code *head)
         p_a[s] = max;
         p_a[l] = temp;
     }
-    // 计算1-2-3-5扩展编码的最短平均长度
+    // computing the shortest average length of 1-2-3-5 extending encoding
     float *code_len = new float[i1];
     code_len[0] = 1;
     code_len[1] = 2;
@@ -304,28 +309,38 @@ void cal_sort_length(huff_code *head)
         l++;
     }
 
-    // 计算等长编码平均长度；
+    // computing the averaget length of equal length encoding
     double q_length = log10(j) / log10(2);
 
-    std::cout << "此指令集操作码huffman编码的平均长度为：" << per_length << std::endl;
-    std::cout << "等长编码的平均长度为：" << q_length << std::endl;
-    std::cout << "按1-2-3-5的扩展编码的最短平均编码长度为：" << ext_length;
+    set_frontground_color(BLUE);
+    std::cout << "The average length of huffman encoding in these instructions set opcodes: " << per_length << std::endl;
+    std::cout << "The average length of equal length encoding: " << q_length << std::endl;
+    std::cout << "The shortest average length of 1-2-3-5 extending encoding: " << ext_length;
+    reset_color();
     std::cout << std::endl;
     std::cout << std::endl;
     if (q_length > per_length)
     {
-        std::cout << "可见HUFFMAN编码的平均长度要比等长编码的平均长度短" << std::endl;
+        set_frontground_color(GREEN);
+        std::cout << "According to this, the average length of huffman encoding is shorter than the average length of equal length encoding!" << std::endl;
+        reset_color();
     }
     else
     {
-        std::cout << "huffman编码有问题请仔细查看算法，以及输入的指令集的概率之和是否大于1。" << std::endl;
+        set_frontground_color(RED);
+        std::cout << "Please check the algorithm if there are problems of huffman encoding, and wheter the sum of probabilities are bigger than 1." << std::endl;
+        reset_color();
     }
     if (ext_length > per_length)
     {
-        std::cout << "可见HUFFMAN编码的平均长度要比1-2-3-5扩展编码的最短平均长度短" << std::endl;
+        set_frontground_color(GREEN);
+        std::cout << "According to this, the average length of huffman encoding is shorter than the average length of 1-2-3-5 extending encoding!" << std::endl;
+        reset_color();
     }
     else
     {
-        std::cout << "huffman编码有问题请仔细查看算法，以及输入的指令集的概率之和是否大于1。" << std::endl;
+        set_frontground_color(RED);
+        std::cout << "Please check the algorithm if there are problems of huffman encoding, and wheter the sum of probabilities are bigger than 1." << std::endl;
+        reset_color();
     }
 }
