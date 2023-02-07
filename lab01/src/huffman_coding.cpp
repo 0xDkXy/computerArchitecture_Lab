@@ -310,7 +310,7 @@ void cal_sort_length(huff_code *head)
     }
 
     // computing the averaget length of equal length encoding
-    double q_length = log10(j) / log10(2);
+    double q_length = ceil(log10(j) / log10(2));
 
     set_frontground_color(BLUE);
     std::cout << "The average length of huffman encoding in these instructions set opcodes: " << per_length << std::endl;
@@ -328,7 +328,7 @@ void cal_sort_length(huff_code *head)
     else
     {
         set_frontground_color(RED);
-        std::cout << "Please check the algorithm if there are problems of huffman encoding, and wheter the sum of probabilities are bigger than 1." << std::endl;
+        std::cout << "Please check the algorithm if there are problems of huffman encoding, and whether the sum of probabilities are bigger than 1." << std::endl;
         reset_color();
     }
     if (ext_length > per_length)
@@ -340,7 +340,7 @@ void cal_sort_length(huff_code *head)
     else
     {
         set_frontground_color(RED);
-        std::cout << "Please check the algorithm if there are problems of huffman encoding, and wheter the sum of probabilities are bigger than 1." << std::endl;
+        std::cout << "Please check the algorithm if there are problems of huffman encoding, and whether the sum of probabilities are bigger than 1." << std::endl;
         reset_color();
     }
 }
