@@ -1,4 +1,5 @@
 #include "LRU.h"
+#include "utils.h"
 #include <stdio.h>
 #include <math.h>
 #include <string.h>
@@ -89,28 +90,34 @@ void calc_result(int num[], int n, int recordMatrix[][12], Cache cache[])
 
 void print_show_UI(int num[], int n, int recordMatrix[][12], Cache cache[])
 {
-    printf("\n序列      ");
+    printf("\nSequence\t");
     int i,j;
     for(i=0;i<n;i++){
-        printf("%d    ",num[i]);
+        printf("%d\t",num[i]);
     }
     for(i=0;i<4;i++){
-        printf("\nCache块%d  ",i);
+        printf("\nCache Block%d\t",i);
         for(j=0;j<12;j++){
-            printf("%d    ",recordMatrix[i][j]);
+            printf("%d\t",recordMatrix[i][j]);
             
         }
     }
-    printf("\n结果     ");
+    printf("\n\nResult\t\t");
     for(j=0;j<12;j++){
         if(recordMatrix[4][j]==1){
-            printf("命中 ");
+            set_background_color(GREEN);
+            printf("Hit\t");
+            reset_color();
         }
         if(recordMatrix[4][j]==2){
-            printf("装入 ");
+            set_background_color(BLUE);
+            printf("Install\t");
+            reset_color();
         }
         if(recordMatrix[4][j]==3){
-            printf("置换 ");
+            set_background_color(RED);
+            printf("Replace\t");
+            reset_color();
         }
     }
     printf("\n");
